@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    depends_on:
+      - wordpress
+    ports:
+      - 443:443
+    volumes:
+      - WordPress:/var/www/html
+    restart: always
+    networks:
+      - Docker_Network
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    volumes:
+      - DB:/var/lib/mysql
+    networks:
+      - Docker_Network
+    restart: always
+    env_file:
+      - .env
+
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    build: ./requirements/wordpress
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - WordPress:/var/www/html
+    networks:
+      - Docker_Network
+ 
+volumes:
+  DB:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/eblondee/data/mariadb
+      o: bind
+
+  WordPress:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/eblondee/data/wordpress
+      o: bind
+
+networks:
+  Docker_Network:
+    driver: bridge
+
