@@ -21,7 +21,7 @@ else
 	sed -i "s/localhost/$MYSQL_HOSTNAME/g" wp-config-sample.php
 	sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
 	cp wp-config-sample.php wp-config.php
-	wp user create master eliotblnd.travail@gmail.com --role=administrator --user_pass=inception --allow-root
+	wp user create eblondee eliotblnd42@gmail.com --role=administrator --user_pass=inception --allow-root
 	wp user update eblondee --allow-root --role=none
 fi
 
